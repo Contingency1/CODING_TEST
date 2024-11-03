@@ -1,4 +1,3 @@
-
 function solution(players, callings) {
   const metaData = {};
 
@@ -6,7 +5,7 @@ function solution(players, callings) {
     metaData[x] = i;
   });
 
-  callings.forEach((x, i) => {
+  callings.forEach((x) => {
     [players[metaData[x] - 1], players[metaData[x]]] = [
       players[metaData[x]],
       players[metaData[x] - 1],
