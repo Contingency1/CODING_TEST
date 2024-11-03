@@ -12,11 +12,8 @@ function solution(today, terms, privacies) {
   privacies.forEach((x, i) => {
     const date = new Date(x.split(" ")[0] + ".00:00:00+00:00");
 
-    // console.log(date);
     date.setMonth(date.getUTCMonth() + EXPIRED_AT[x.split(" ")[1]]);
 
-    // console.log(date);
-    console.log(TODAY.getDate(), date.getDate());
     if (
       TODAY.getFullYear() > date.getFullYear() ||
       (TODAY.getFullYear() === date.getFullYear() &&
