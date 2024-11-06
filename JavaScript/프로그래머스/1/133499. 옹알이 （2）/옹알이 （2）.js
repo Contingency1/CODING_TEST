@@ -1,9 +1,7 @@
 function solution(babbling) {
-  let answer = 0;
-
   const AVAILABLE = ["aya", "ye", "woo", "ma"];
 
-  answer = babbling.reduce((acc, cur) => {
+  return babbling.reduce((acc, cur) => {
     let prev = "";
     while (cur.length > 0) {
       for (let i = 0; i < AVAILABLE.length; i++) {
@@ -24,6 +22,4 @@ function solution(babbling) {
 
     return ++acc;
   }, 0);
-
-  return answer;
 }
