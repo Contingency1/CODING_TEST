@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
-import java.util.Objects;
 
 public class Main {
 
@@ -21,7 +20,7 @@ public class Main {
 
     for (int i = 0; i < N; i++) {
       String str = br.readLine();
-      if (Objects.equals(str, "ENTER")) {
+      if (str.equals("ENTER")) {
         set.clear();
         start = true;
         continue;
