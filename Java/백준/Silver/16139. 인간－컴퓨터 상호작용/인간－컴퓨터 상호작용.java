@@ -9,23 +9,30 @@ public class Main {
     StringBuilder sb = new StringBuilder();
 
     char[] chars = br.readLine().toCharArray();
-
     int count = Integer.parseInt(br.readLine());
 
-    for (int i = 1; i <= count; i++) {
-      String[] str = br.readLine().split(" ");
+    int[][] freq = new int[26][chars.length];
 
-      char character = str[0].charAt(0);
-      int answer = 0;
-      for (int j = Integer.parseInt(str[1]); j <= Integer.parseInt(str[2]); j++) {
-//        sb.append("character: ").append(character).append("\n")
-//            .append("chars[j]: ").append(chars[j]).append("\n");
+    freq[chars[0] - 'a'][0] = 1;
 
-        if (chars[j] == character) {
-          answer++;
-        }
+    for (int i = 1; i < chars.length; i++) {
+      for (int j = 0; j < 26; j++) {
+        freq[j][i] = freq[j][i - 1];
       }
-      sb.append(answer).append("\n");
+      freq[chars[i] - 'a'][i]++;
+    }
+
+    for (int i = 0; i < count; i++) {
+      String[] str = br.readLine().split(" ");
+      char character = str[0].charAt(0);
+      int number1 = Integer.parseInt(str[1]);
+      int number2 = Integer.parseInt(str[2]);
+
+      int charIndex = character - 'a';
+      int minus = (number1 == 0) ? 0 : freq[charIndex][number1 - 1];
+      int answer = freq[charIndex][number2];
+
+      sb.append(answer - minus).append("\n");
     }
 
     System.out.print(sb);
