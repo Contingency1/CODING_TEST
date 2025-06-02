@@ -72,15 +72,6 @@ public class Main {
         isUsed[second] = true;
       }
 
-/*      for (List<Integer> list : nodes) {
-        System.out.println("list = " + list);
-      }
-      System.out.println("inDegreeCount = " + Arrays.toString(inDegreeCount));
-      System.out.println("=====");*/
-//      for (int[] rankChanged : rankChangedTeam) {
-//        System.out.println("rankChanged = " + Arrays.toString(rankChanged));
-//      }
-
       for (int[] team : rankChangedTeam) {
         int front = team[0];
         int back = team[1];
@@ -97,12 +88,6 @@ public class Main {
         nodes.get(front).add(back);
         inDegreeCount[back]++;
       }
-
-/*      for (List<Integer> list : nodes) {
-        System.out.println("list = " + list);
-      }
-      System.out.println("inDegreeCount = " + Arrays.toString(inDegreeCount));
-      System.out.println("=====");*/
 
       List<Integer> result = new ArrayList<>();
 
