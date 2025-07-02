@@ -1,2 +1,2 @@
-# Programmers
-Programmers problem
+# Coding Test
+Coding Test Repository
