@@ -26,12 +26,8 @@ class Main {
     StringTokenizer st = new StringTokenizer(br.readLine());
     st.nextToken();
 
-    int[] parent = new int[WORKER_COUNT];
-    parent[0] = -1;
-
     for (int i = 1; i < WORKER_COUNT; i++) {
       int boss = Integer.parseInt(st.nextToken());
-      parent[i] = boss;
       child.get(boss).add(i);
     }
 
