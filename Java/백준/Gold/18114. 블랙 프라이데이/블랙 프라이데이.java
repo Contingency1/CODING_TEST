@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.List;
 import java.util.ArrayList;
@@ -17,7 +15,6 @@ public class Main {
         final int WEIGHT = Integer.parseInt(st.nextToken());
 
         List<Integer> list = new ArrayList<>();
-        Set<Integer> set = new HashSet<>();
         
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < ITEM_COUNT; i++) {
@@ -31,7 +28,6 @@ public class Main {
 
             if (now < WEIGHT) {
                 list.add(now);
-                set.add(now);
             }
         }
 
