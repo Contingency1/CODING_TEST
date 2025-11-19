@@ -5,11 +5,10 @@ import java.util.StringTokenizer;
 
 public class Main {
 
-    static int N;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        N = Integer.parseInt(br.readLine());
+        int N = Integer.parseInt(br.readLine());
 
         StringTokenizer st = new StringTokenizer(br.readLine());
 
@@ -19,9 +18,9 @@ public class Main {
             input[i] = Integer.parseInt(st.nextToken());
         }
 
-        int answer = 1;
-        int cur = 1;
-        
+        int answer = 0;
+        int cur = 0;
+
         for (int i = 0; i < N; i++) {
             if (input[i] >= cur + 1) {
                 cur++;
