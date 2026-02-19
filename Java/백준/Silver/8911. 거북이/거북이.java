@@ -14,18 +14,37 @@ public class Main {
       Turtle turtle = new Turtle();
 
       for (char in : input) {
-        if (in == 'F' || in == 'B') {
-          turtle.move(in);
-        } else if (in == 'L') {
-          turtle.turnLeft();
-        } else {
-          turtle.turnRight();
-        }
+        Command command = Command.from(in);
+
+        turtle.execute(command);
       }
 
       System.out.println(turtle.getArea());
     }
   }
+
+  enum Command {
+    FORWARD('F'),
+    BACKWARD('B'),
+    TURN_LEFT('L'),
+    TURN_RIGHT('R');
+
+    private final char code;
+
+    Command(char code) {
+      this.code = code;
+    }
+
+    public static Command from(char code) {
+      for (Command c : Command.values()) {
+        if (c.code == code) {
+          return c;
+        }
+      }
+      throw new RuntimeException("NOOOOOO~~~");
+    }
+  }
+
 
   static class Turtle {
 
@@ -43,19 +62,35 @@ public class Main {
     public Turtle() {
     }
 
-    public void turnLeft() {
-      direction = direction.prevDirection();
+    public void execute(Command command) {
+      switch (command) {
+        case FORWARD:
+          forward();
+          break;
+        case BACKWARD:
+          backward();
+          break;
+        case TURN_LEFT:
+          direction = direction.prevDirection();
+          break;
+        case TURN_RIGHT:
+          direction = direction.nextDirection();
+      }
     }
 
-    public void turnRight() {
-      direction = direction.nextDirection();
+    public void forward() {
+      move(1);
     }
 
-    public void move(char word) {
-      CoordinateOffset coordinateOffset = direction.getCoordinateOffset(word);
+    public void backward() {
+      move(-1);
+    }
 
-      int deltaX = coordinateOffset.deltaX;
-      int deltaY = coordinateOffset.deltaY;
+    private void move(int multiplier) {
+      CoordinateOffset coordinateOffset = direction.getCoordinateOffset();
+
+      int deltaX = coordinateOffset.deltaX * multiplier;
+      int deltaY = coordinateOffset.deltaY * multiplier;
 
       int newX = this.x + deltaX;
       int newY = this.y + deltaY;
@@ -96,7 +131,7 @@ public class Main {
 
   interface Direction {
 
-    CoordinateOffset getCoordinateOffset(char word);
+    CoordinateOffset getCoordinateOffset();
 
     Direction nextDirection();
 
@@ -158,12 +193,8 @@ public class Main {
     }
 
     @Override
-    public CoordinateOffset getCoordinateOffset(char word) {
-      if (word == 'F') {
-        return new CoordinateOffset(deltaX, deltaY);
-      }
-
-      return new CoordinateOffset(-deltaX, -deltaY);
+    public CoordinateOffset getCoordinateOffset() {
+      return new CoordinateOffset(deltaX, deltaY);
     }
 
     @Override
