@@ -19,53 +19,37 @@ public class Main {
     
     Board board = new Board(NUMBER_COUNT, CURRENT_FLOOR);
  
-    BoardCalculateService service = new BoardCalculateService(MAX_FLOOR, MAX_REVERSE_COUNT, NUMBER_COUNT, board);
+    BoardCalculateService service = new BoardCalculateService();
 
-    int answer = service.getPossibleCount();
+    int answer = service.getPossibleCount(board, MAX_FLOOR, MAX_REVERSE_COUNT, NUMBER_COUNT, CURRENT_FLOOR);
 
     System.out.print(answer);
   }
 
   static class BoardCalculateService {
-    int maxFloor;
-    int maxReverseCount;
-    int numberCount;
-    Board target;
-
-    BoardCalculateService(int maxFloor, int maxReverseCount, int numberCount, Board board) {
-      this.maxFloor = maxFloor;
-      this.maxReverseCount = maxReverseCount;
-      this.numberCount = numberCount;
-      this.target = board;
-    }
-
-    public int getPossibleCount() {
+    public int getPossibleCount(Board target, int maxFloor, int maxReverseCount, int numberCount,int curFloor) {
       int result = 0;
 
-      for (int i = 1; i <= this.maxFloor; i++) {
-        if (this.target.getCurFloor() == i) {
+      for (int i = 1; i <= maxFloor; i++) {
+        if (curFloor == i) {
           continue;
         }
 
         Board cur = new Board(numberCount ,i);
 
-        if(this.target.canMake(cur, maxReverseCount)){
+        if(target.canMake(cur, maxReverseCount)){
           result++;
         }
       }
 
       return result;
     }
-
   }
 
   static class Board {
-    private int curFloor;
     private List<Place> places = new ArrayList<>();
 
     Board(int numberCount, int currentFloor) {
-      this.curFloor = currentFloor;
-
       for (int i = numberCount; i >= 1; i--) {
         int ten = (int) Math.pow(10, i - 1);
         int input = (currentFloor / ten) % 10;
@@ -92,14 +76,9 @@ public class Main {
       return true;
     }
 
-    public List<Place> getPlaces() {
+    private List<Place> getPlaces() {
       return this.places;
     }
-
-    public int getCurFloor() {
-      return this.curFloor;
-    }
-
   }
 
   enum Place {
@@ -115,7 +94,7 @@ public class Main {
     NINE(9, true, true, true, true, false, true, true);
 
     int value;
-    Led[] leds = new Led[7];
+    boolean[] leds = new boolean[7];
 
     static int[][] CACHE = new int[10][10];
 
@@ -123,7 +102,7 @@ public class Main {
       this.value = value;
 
       for (int i = 0; i < 7; i++) {
-        this.leds[i] = new Led(input[i]);
+        this.leds[i] = input[i];
       }
 
     }
@@ -140,7 +119,7 @@ public class Main {
       }
 
       for (int i = 0; i < this.leds.length; i++) {
-        if(this.leds[i].isDiff(o.leds[i])) {
+        if(this.leds[i] != o.leds[i]) {
           result++;
         }
       }
@@ -158,26 +137,5 @@ public class Main {
 
       throw new RuntimeException("NOOOO");
     }
-  }
-
-  static class Led {
-    private boolean power;
-
-    Led (boolean power) {
-      this.power = power;
-    }
-
-    public boolean getPower() {
-      return this.power;
-    }
-
-    public boolean isDiff(Led led) {
-      if (this.power != led.getPower()) {
-        return true;
-      }
-
-      return false;
-    }
-
   }
 }
